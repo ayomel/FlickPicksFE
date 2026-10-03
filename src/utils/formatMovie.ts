@@ -1,0 +1,96 @@
+import type { MovieDetails } from '@/types/movieDetails'
+import { getBackdropPath } from '@/utils/getPosterPath'
+
+export const formatRuntime = (minutes: number) => {
+  if (!minutes || minutes <= 0) return null
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  if (hours === 0) return `${mins}m`
+  if (mins === 0) return `${hours}h`
+  return `${hours}h ${mins}m`
+}
+
+export const formatReleaseDate = (date: string) => {
+  if (!date) return null
+  const parsed = new Date(`${date}T00:00:00`)
+  if (Number.isNaN(parsed.getTime())) return date
+  return parsed.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
+export const formatReleaseYear = (date: string) => {
+  if (!date) return null
+  return date.slice(0, 4)
+}
+
+export const formatRating = (voteAverage: number) => {
+  return voteAverage.toFixed(1)
+}
+
+export const extractYoutubeVideoId = (url: string) => {
+  try {
+    const parsed = new URL(url)
+    if (parsed.hostname.includes('youtu.be')) {
+      return parsed.pathname.slice(1).split('/')[0] || null
+    }
+    if (parsed.hostname.includes('youtube.com')) {
+      const v = parsed.searchParams.get('v')
+      if (v) return v
+      const embedMatch = parsed.pathname.match(/\/embed\/([^/?]+)/)
+      if (embedMatch?.[1]) return embedMatch[1]
+    }
+  } catch {
+    return null
+  }
+  return null
+}
+
+export const resolveTrailerVideoId = (movie: MovieDetails) => {
+  if (movie.trailer) {
+    const fromTrailer = extractYoutubeVideoId(movie.trailer)
+    if (fromTrailer) return fromTrailer
+  }
+
+  const videos = movie.videos?.results ?? []
+  const trailers = videos.filter(
+    (v) => v.site === 'YouTube' && v.type === 'Trailer',
+  )
+  const official = trailers.find((v) => v.official)
+  if (official?.key) return official.key
+  if (trailers[0]?.key) return trailers[0].key
+  return null
+}
+
+export const resolveTrailerUrl = (movie: MovieDetails) => {
+  if (movie.trailer) return movie.trailer
+  const videoId = resolveTrailerVideoId(movie)
+  if (videoId) return `https://www.youtube.com/watch?v=${videoId}`
+  return null
+}
+
+export const resolveBackdropUrl = (movie: MovieDetails) => {
+  if (movie.backdrop?.startsWith('http')) return movie.backdrop
+  if (movie.backdrop_path) return getBackdropPath(movie.backdrop_path)
+  return null
+}
+
+export const getProviderLogoUrl = (logoPath: string) => {
+  return `https://image.tmdb.org/t/p/w92${logoPath}`
+}
+
+export const getPrimaryLanguage = (movie: MovieDetails) => {
+  const spoken = movie.spoken_languages?.[0]?.english_name
+  if (spoken) return spoken
+  return movie.original_language?.toUpperCase() ?? null
+}
+
+export const getStudioNames = (movie: MovieDetails) => {
+  const names = movie.production_companies
+    ?.map((c) => c.name)
+    .filter(Boolean)
+  if (!names?.length) return null
+  return names.join(', ')
+}

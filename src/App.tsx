@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { MovieDetails } from './pages/[..movieId]';
+import { MovieDetails } from './pages/MovieDetails';
 
 function App() {
   return (
