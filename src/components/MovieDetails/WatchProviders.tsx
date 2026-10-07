@@ -1,3 +1,5 @@
+import { PageSection } from '@/components/ui/page-section'
+import { SectionLabel } from '@/components/ui/section-label'
 import type { StreamingProviders, WatchProvider } from '@/types/movieDetails'
 import { getProviderLogoUrl } from '@/utils/formatMovie'
 
@@ -16,14 +18,14 @@ const ProviderGroup = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="m-0 text-xs font-medium tracking-[0.15em] text-white/45 uppercase">
+      <h3 className="m-0 font-mono text-[11px] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
         {label}
       </h3>
-      <ul className="m-0 flex list-none flex-wrap gap-3 p-0">
+      <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
         {items.map((provider) => (
           <li key={`${label}-${provider.provider_id}`}>
             <div
-              className="flex size-12 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-white/5 p-1.5"
+              className="flex size-11 items-center justify-center overflow-hidden rounded-md border border-border bg-card p-1.5 transition-colors hover:bg-muted"
               title={provider.provider_name}
             >
               <img
@@ -47,27 +49,23 @@ export const WatchProviders = ({ providers }: WatchProvidersProps) => {
 
   if (!hasAny) {
     return (
-      <section className="border-t border-white/10 px-6 py-10 sm:px-10 lg:px-16">
-        <h2 className="m-0 mb-4 text-xs font-medium tracking-[0.2em] text-amber-200/90 uppercase">
-          Where to watch
-        </h2>
-        <p className="m-0 text-sm text-white/50">
+      <PageSection>
+        <SectionLabel className="mb-3">Where to watch</SectionLabel>
+        <p className="m-0 text-sm text-muted-foreground">
           Streaming availability is currently unavailable.
         </p>
-      </section>
+      </PageSection>
     )
   }
 
   return (
-    <section className="border-t border-white/10 px-6 py-10 sm:px-10 lg:px-16">
-      <h2 className="m-0 mb-6 text-xs font-medium tracking-[0.2em] text-amber-200/90 uppercase">
-        Where to watch
-      </h2>
+    <PageSection>
+      <SectionLabel className="mb-6">Where to watch</SectionLabel>
       <div className="flex flex-col gap-8 sm:flex-row sm:flex-wrap sm:gap-12">
         <ProviderGroup label="Stream" items={stream} />
         <ProviderGroup label="Rent" items={rent} />
         <ProviderGroup label="Buy" items={buy} />
       </div>
-    </section>
+    </PageSection>
   )
 }

@@ -18,36 +18,32 @@ export const MovieMetadata = ({ movie }: MovieMetadataProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="m-0 max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+      <h1 className="max-w-4xl text-[clamp(2rem,5vw,3.5rem)] leading-none font-semibold tracking-[-0.035em] text-foreground">
         {movie.title}
       </h1>
       {movie.tagline ? (
-        <p className="m-0 max-w-2xl text-lg italic text-amber-200/90 sm:text-xl">
+        <p className="m-0 max-w-2xl font-display text-lg italic text-muted-foreground sm:text-xl">
           {movie.tagline}
         </p>
       ) : null}
       <div className="flex flex-wrap items-center gap-3">
         <Badge
           variant="outline"
-          className="h-7 gap-1 border-amber-400/35 bg-amber-400/10 px-2.5 text-sm text-amber-100"
+          className="h-6 gap-1 border-brand/30 bg-brand-soft px-2 text-brand"
         >
-          <Star className="size-3.5 fill-amber-300 text-amber-300" />
+          <Star className="size-3 fill-brand text-brand" />
           {formatRating(movie.vote_average)}
         </Badge>
         {metaParts.length > 0 ? (
-          <p className="m-0 text-sm text-white/75">
-            {metaParts.join('   •   ')}
+          <p className="m-0 font-mono text-xs text-muted-foreground">
+            {metaParts.join(' · ')}
           </p>
         ) : null}
       </div>
       {movie.genres.length > 0 ? (
         <div className="flex flex-wrap gap-2">
           {movie.genres.map((genre) => (
-            <Badge
-              key={genre.id}
-              variant="outline"
-              className="border-white/20 bg-white/5 text-white/90"
-            >
+            <Badge key={genre.id} variant="secondary" className="border border-border">
               {genre.name}
             </Badge>
           ))}

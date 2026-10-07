@@ -20,7 +20,7 @@ export const MovieDetails = () => {
   }
 
   return (
-    <div className="min-h-svh bg-black text-white">
+    <div className="min-h-svh bg-background text-foreground">
       <MovieHero movie={data} />
       <MovieOverview overview={data.overview} />
       <WatchProviders providers={data.streaming_providers} />

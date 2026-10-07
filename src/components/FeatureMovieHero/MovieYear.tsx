@@ -7,5 +7,7 @@ export const MovieYear = ({ releaseDate }: MovieYearProps) => {
 
   if (!year) return null
 
-  return <p className="m-0 text-sm text-white/70">{year}</p>
+  return (
+    <p className="m-0 font-mono text-xs text-muted-foreground">{year}</p>
+  )
 }

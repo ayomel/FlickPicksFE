@@ -9,23 +9,21 @@ type MovieActionsProps = {
 
 export const MovieActions = ({ movie }: MovieActionsProps) => {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3 pt-1">
       <Link to={`/movies/${movie.id}`}>
-        <Button
-          className="rounded-full px-4"
-        >
+        <Button>
           <Info data-icon="inline-start" />
-          More Info
+          View details
         </Button>
       </Link>
       <Button
-        className="rounded-full px-4"
+        variant="secondary"
         onPress={() => {
           console.log('watchlist', movie.id, movie.title)
         }}
       >
         <Plus data-icon="inline-start" />
-        Want to Watchlist
+        Watchlist
       </Button>
     </div>
   )

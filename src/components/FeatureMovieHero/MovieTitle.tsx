@@ -4,7 +4,7 @@ type MovieTitleProps = {
 
 export const MovieTitle = ({ title }: MovieTitleProps) => {
   return (
-    <h1 className="m-0 max-w-xl text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+    <h1 className="max-w-xl text-[clamp(2.75rem,8vw,4.5rem)] leading-[0.92] font-semibold tracking-[-0.04em] text-foreground">
       {title}
     </h1>
   )
