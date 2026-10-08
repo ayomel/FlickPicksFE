@@ -25,7 +25,7 @@ export const HeroControls = ({
         size="icon"
         variant="secondary"
         aria-label="Previous movie"
-        className="absolute top-1/2 left-3 z-20 -translate-y-1/2 rounded-full sm:left-5"
+        className="absolute top-1/2 left-3 z-20 -translate-y-1/2 sm:left-5"
         onPress={onPrev}
       >
         <ChevronLeft />
@@ -34,12 +34,12 @@ export const HeroControls = ({
         size="icon"
         variant="secondary"
         aria-label="Next movie"
-        className="absolute top-1/2 right-3 z-20 -translate-y-1/2 rounded-full sm:right-5"
+        className="absolute top-1/2 right-3 z-20 -translate-y-1/2 sm:right-5"
         onPress={onNext}
       >
         <ChevronRight />
       </Button>
-      <div className="absolute bottom-8 left-6 z-20 flex flex-wrap gap-2 sm:left-12 lg:left-20">
+      <div className="absolute bottom-8 left-6 z-20 flex flex-wrap gap-2 sm:left-8 lg:left-10">
         {Array.from({ length: count }, (_, dotIndex) => (
           <button
             key={dotIndex}
@@ -47,8 +47,10 @@ export const HeroControls = ({
             aria-label={`Show movie ${dotIndex + 1}`}
             aria-current={dotIndex === index ? true : undefined}
             className={cn(
-              'size-2 rounded-full',
-              dotIndex === index ? 'bg-white' : 'bg-white/35 hover:bg-white/60',
+              'size-2 rounded-sm transition-colors',
+              dotIndex === index
+                ? 'bg-brand'
+                : 'bg-muted-foreground/40 hover:bg-muted-foreground/70',
             )}
             onClick={() => onGoTo(dotIndex)}
           />

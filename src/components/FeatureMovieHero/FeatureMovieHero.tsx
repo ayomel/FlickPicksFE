@@ -9,11 +9,12 @@ import { MovieTitle } from './MovieTitle'
 import { MovieDescription } from './MovieDescription'
 import { MovieActions } from './MovieActions'
 import { HeroControls } from './HeroControls'
+import { SectionLabel } from '@/components/ui/section-label'
 
 const HeroFrame = ({ children }: { children: string }) => {
   return (
-    <section className="flex min-h-svh items-end bg-black px-6 pb-16 text-sm text-white/70 sm:px-12 lg:px-20">
-      <p className="m-0">{children}</p>
+    <section className="flex min-h-svh items-end bg-background px-6 pb-16 pt-16 text-sm text-muted-foreground sm:px-8 lg:px-10">
+      <p className="m-0 font-mono text-xs">{children}</p>
     </section>
   )
 }
@@ -26,20 +27,20 @@ export const FeatureMovieHero = () => {
   const movie = movies[index]
 
   if (isLoading) {
-    return <HeroFrame>Loading trending movies</HeroFrame>
+    return <HeroFrame>Loading trending movies…</HeroFrame>
   }
 
   if (isError) {
-    return <HeroFrame>Couldn't load trending movies</HeroFrame>
+    return <HeroFrame>Couldn&apos;t load trending movies.</HeroFrame>
   }
 
   if (!movie) {
-    return <HeroFrame>No trending movies right now</HeroFrame>
+    return <HeroFrame>No trending movies right now.</HeroFrame>
   }
 
   return (
     <section
-      className="relative min-h-svh overflow-hidden bg-black text-white"
+      className="relative min-h-svh overflow-hidden bg-background text-foreground"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -56,6 +57,7 @@ export const FeatureMovieHero = () => {
       />
       <HeroOverlay />
       <HeroContent>
+        <SectionLabel>Trending now</SectionLabel>
         <MovieYear releaseDate={movie.release_date} />
         <MovieTitle title={movie.title} />
         <MovieDescription overview={movie.overview} />
